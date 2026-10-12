@@ -1,0 +1,329 @@
+// === TRADUCTIONS ET DICTIONNAIRE MULTILINGUE ===
+const I18N = {
+    fr: {
+        subtitle: "Trouvez tous les mots cachés dans la grille",
+        wordsToFind: "Mots à trouver",
+        level: "Niveau",
+        modalSuccessMsg: "Félicitations ! Vous avez découvert tous les mots.",
+        nextLevel: "Niveau Suivant ➔",
+        completedAll: "Félicitations ! Vous avez terminé les 20 niveaux !"
+    },
+    ht: {
+        subtitle: "Jwenn tout mo ki kache nan griy la",
+        wordsToFind: "Mo pou w jwenn",
+        level: "Nivo",
+        modalSuccessMsg: "Felisitasyon ! Ou jwenn tout mo yo.",
+        nextLevel: "Nivo Swivan ➔",
+        completedAll: "Bravou ! Ou fini tout 20 nivo yo !"
+    },
+    en: {
+        subtitle: "Find all the hidden words in the grid",
+        wordsToFind: "Words to find",
+        level: "Level",
+        modalSuccessMsg: "Congratulations! You found all the words.",
+        nextLevel: "Next Level ➔",
+        completedAll: "Congratulations! You completed all 20 levels!"
+    }
+};
+
+// === 20 NIVEAUX DANS LES 3 LANGUES ===
+const LEVELS = {
+    fr: [
+        { title: "1. Histoire & Héritage", words: ["BREDA", "TOUSSAINT", "LOUVERTURE", "HISTOIRE", "MEMOIRE"] },
+        { title: "2. Métropole du Nord", words: ["CAP", "HAITI", "NORD", "PATRIMOINE", "HERITAGE"] },
+        { title: "3. Service d'Hébergement", words: ["HOTEL", "BUNGALOW", "GITE", "CHAMBRE", "LOGEMENT"] },
+        { title: "4. Architecture Ancestrale", words: ["STYLE", "BOIS", "VERANDA", "TRADITION", "CHARME"] },
+        { title: "5. Confort & Equipements", words: ["CONFORT", "PROPRE", "SECURITE", "EAUCHAUDE", "SEJOUR"] },
+        { title: "6. Cuisine Pratique", words: ["CUISINETTE", "EQUIPE", "AUTONOMIE", "EQUIPEMENT", "REPOS"] },
+        { title: "7. Technologie & Connexion", words: ["WIFI", "INTERNET", "TELEVISION", "ECRAN", "RESEAU"] },
+        { title: "8. Centre de Conférences", words: ["CONFERENCE", "REUNION", "SEMINAIRE", "SALLE", "AFFAIRES"] },
+        { title: "9. Équipement Pro", words: ["PROJECTEUR", "MICRO", "SONO", "TABLEAU", "AIRCON"] },
+        { title: "10. Réceptions & Fêtes", words: ["BANQUET", "MARIAGE", "FETE", "ANNIVERSAIRE", "ACCUEIL"] },
+        { title: "11. Gastronomie Haïtienne", words: ["GASTRONOMIE", "RESTAURANT", "MENU", "CUISINE", "SAVEUR"] },
+        { title: "12. La Ferme Agricole", words: ["FERME", "RECOLTE", "FRAIS", "PRODUIT", "NATURE"] },
+        { title: "13. Boissons & Jus", words: ["JUS", "BOISSON", "DICE", "DELECTABLE", "COCKTAIL"] },
+        { title: "14. Cadre & Verdure", words: ["CHALEUREUX", "CADRE", "VERDURE", "PLEINAIR", "DETENTE"] },
+        { title: "15. Espace Lakou Fun", words: ["LAKOU", "LUDIQUE", "PARC", "LOISIR", "AMUSEMENT"] },
+        { title: "16. Jeux Traditionnels", words: ["DOMINO", "MARELLE", "DAMIER", "LUDO", "JEUX"] },
+        { title: "17. Sports & Précision", words: ["PINGPONG", "FLECHETTE", "BILLARD", "BOWLING", "MATCH"] },
+        { title: "18. Expérience Familiale", words: ["FAMILLE", "ENFANTS", "AMIS", "PARTAGE", "JOIE"] },
+        { title: "19. Équipe & Service", words: ["SERVICE", "EQUIPE", "ACCUEIL", "QUALITE", "SURMESURE"] },
+        { title: "20. Vision AyitiZ", words: ["AYITIZ", "VALEUR", "REUSSITE", "VISION", "EXCELLENCE"] }
+    ],
+    ht: [
+        { title: "1. Istwa ak Eraj", words: ["BREDA", "TUSEN", "LOUVELETI", "ISTWA", "MEMWA"] },
+        { title: "2. Metropol Nò", words: ["KAP", "AYITI", "NO", "PATRIMOAN", "ERITAJ"] },
+        { title: "3. Sèvis Ebejman", words: ["OTEL", "BOUNGALO", "JIT", "CHANM", "LOJMAN"] },
+        { title: "4. Arkitektè Ansyen", words: ["ESTIL", "BWA", "VERANDA", "TRADISYON", "CHAM"] },
+        { title: "5. Konfò ak Sekirite", words: ["KONFO", "PWOPE", "SEKIRITE", "DLOCHO", "SEJOU"] },
+        { title: "6. Kizin ak Ekipman", words: ["KIZIN", "EKIPE", "OTONOMI", "PAWOL", "REPO"] },
+        { title: "7. Teknolozi ak Entènèt", words: ["WIFI", "ENTENET", "TELEVIZYON", "EKRAN", "REZO"] },
+        { title: "8. Sant Konferans", words: ["KONFERANS", "RENYON", "SEMENE", "SAL", "AFE"] },
+        { title: "9. Ekipman Konferans", words: ["PWOJEKTE", "MIKRO", "SONO", "TABLEAU", "KLI"] },
+        { title: "10. Resepsyon ak Fèt", words: ["BANKE", "MARYAJ", "FET", "ANIVESE", "AKEI"] },
+        { title: "11. Gastronomi Ayisyen", words: ["MOULE", "RESTORAN", "MENI", "KIZIN", "GOU"] },
+        { title: "12. Jaden ak Agrikilti", words: ["JADEN", "REKOLT", "FRE", "PWODWI", "NATI"] },
+        { title: "13. Bwoson ak Ji", words: ["JI", "BWASON", "GLAS", "GOUDOU", "KOKTEL"] },
+        { title: "14. Kad ak Lanati", words: ["KALE", "KAD", "VET", "ALE", "DETANN"] },
+        { title: "15. Espas Lakou Fun", words: ["LAKOU", "LUDIK", "PAK", "LOZIK", "ANMIZMAN"] },
+        { title: "16. Jwèt Tradisyonèl", words: ["DOMINO", "MAREL", "DAMYE", "LUDO", "JWET"] },
+        { title: "17. Espò ak Sible", words: ["PINGPONG", "FLES", "BIYA", "BOLING", "MATCH"] },
+        { title: "18. Fanmi ak Zanmi", words: ["FANMI", "TIMOUN", "ZANMI", "PATAGE", "JWA"] },
+        { title: "19. Ekip ak Sèvis", words: ["SEVIS", "EKIP", "AKEI", "KALITE", "MESI"] },
+        { title: "20. Vizyon AyitiZ", words: ["AYITIZ", "VALE", "SISI", "VIZYON", "GWOSTOU"] }
+    ],
+    en: [
+        { title: "1. History & Heritage", words: ["BREDA", "TOUSSAINT", "LOUVERTURE", "HISTORY", "MEMORY"] },
+        { title: "2. The Northern Capital", words: ["CAP", "HAITI", "NORTH", "HERITAGE", "LEGACY"] },
+        { title: "3. Accommodation", words: ["HOTEL", "BUNGALOW", "LODGE", "ROOM", "STAY"] },
+        { title: "4. Ancestral Style", words: ["STYLE", "WOOD", "VERANDA", "TRADITION", "CHARM"] },
+        { title: "5. Comfort & Amenities", words: ["COMFORT", "CLEAN", "SAFETY", "HOTWATER", "REST"] },
+        { title: "6. Kitchenette", words: ["KITCHEN", "EQUIPPED", "AUTONOMY", "COOK", "EAT"] },
+        { title: "7. Tech & Connection", words: ["WIFI", "INTERNET", "TV", "SCREEN", "NETWORK"] },
+        { title: "8. Conference Center", words: ["CONFERENCE", "MEETING", "SEMINAR", "HALL", "BUSINESS"] },
+        { title: "9. Pro Equipment", words: ["PROJECTOR", "MIC", "SOUND", "BOARD", "AIRCON"] },
+        { title: "10. Banquets & Events", words: ["BANQUET", "WEDDING", "PARTY", "BIRTHDAY", "WELCOME"] },
+        { title: "11. Fine Dining", words: ["GASTRONOMY", "RESTAURANT", "MENU", "CUISINE", "FLAVOR"] },
+        { title: "12. Agricultural Farm", words: ["FARM", "HARVEST", "FRESH", "PRODUCE", "NATURE"] },
+        { title: "13. Drinks & Juices", words: ["JUICE", "DRINK", "ICE", "FRESH", "COCKTAIL"] },
+        { title: "14. Relaxing Setting", words: ["WARM", "SETTING", "GREEN", "OUTDOOR", "RELAX"] },
+        { title: "15. Lakou Fun Park", words: ["LAKOU", "FUN", "PARK", "LEISURE", "PLAY"] },
+        { title: "16. Traditional Games", words: ["DOMINOES", "HOPSCOTCH", "CHECKERS", "LUDO", "GAMES"] },
+        { title: "17. Sports & Fun", words: ["PINGPONG", "DARTS", "POOL", "BOWLING", "MATCH"] },
+        { title: "18. Family Experience", words: ["FAMILY", "KIDS", "FRIENDS", "SHARE", "JOY"] },
+        { title: "19. Team & Service", words: ["SERVICE", "TEAM", "WELCOME", "QUALITY", "CUSTOM"] },
+        { title: "20. AyitiZ Vision", words: ["AYITIZ", "VALUE", "SUCCESS", "VISION", "IMPACT"] }
+    ]
+};
+
+// === ÉTAT DU JEU ===
+const GRID_SIZE = 10;
+let currentLang = 'fr';
+let currentLevelIndex = 0;
+let gridMatrix = [];
+let targetWords = [];
+let foundWords = new Set();
+let selectedCells = [];
+let isSelecting = false;
+
+// === INITIALISATION ===
+document.addEventListener('DOMContentLoaded', () => {
+    loadLevel(currentLevelIndex);
+
+    // Changement de Langue
+    document.getElementById('langSelect').addEventListener('change', (e) => {
+        currentLang = e.target.value;
+        updateUITranslations();
+        loadLevel(currentLevelIndex);
+    });
+
+    // Toggle Thème Sombre / Clair
+    document.getElementById('themeToggleBtn').addEventListener('click', () => {
+        const body = document.body;
+        if (body.classList.contains('theme-dark')) {
+            body.classList.remove('theme-dark');
+            document.getElementById('themeToggleBtn').innerText = '🌙';
+        } else {
+            body.classList.add('theme-dark');
+            document.getElementById('themeToggleBtn').innerText = '☀️';
+        }
+    });
+
+    // Restart Level
+    document.getElementById('restartLevelBtn').addEventListener('click', () => {
+        loadLevel(currentLevelIndex);
+    });
+
+    // Next Level
+    document.getElementById('nextLevelBtn').addEventListener('click', () => {
+        document.getElementById('levelModal').classList.add('hidden');
+        currentLevelIndex++;
+        if (currentLevelIndex < LEVELS[currentLang].length) {
+            loadLevel(currentLevelIndex);
+        } else {
+            alert(I18N[currentLang].completedAll);
+            currentLevelIndex = 0;
+            loadLevel(0);
+        }
+    });
+
+    // Sélection Tactile / Souris
+    const gridEl = document.getElementById('wordGrid');
+    
+    gridEl.addEventListener('pointerdown', (e) => {
+        if (e.target.classList.contains('cell')) {
+            isSelecting = true;
+            selectedCells = [e.target];
+            e.target.classList.add('selected');
+        }
+    });
+
+    gridEl.addEventListener('pointermove', (e) => {
+        if (!isSelecting) return;
+        const el = document.elementFromPoint(e.clientX, e.clientY);
+        if (el && el.classList.contains('cell') && !selectedCells.includes(el)) {
+            selectedCells.push(el);
+            el.classList.add('selected');
+        }
+    });
+
+    window.addEventListener('pointerup', () => {
+        if (isSelecting) {
+            isSelecting = false;
+            checkSelection();
+        }
+    });
+});
+
+// === MISE À JOUR DES TRADUCTIONS UI ===
+function updateUITranslations() {
+    const t = I18N[currentLang];
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.dataset.i18n;
+        if (t[key]) el.innerText = t[key];
+    });
+}
+
+// === CHARGEMENT DE NIVEAU ===
+function loadLevel(index) {
+    const level = LEVELS[currentLang][index];
+    targetWords = level.words.map(w => w.toUpperCase());
+    foundWords.clear();
+
+    const t = I18N[currentLang];
+    document.getElementById('levelDisplay').innerText = `${t.level} ${index + 1} / 20`;
+    document.getElementById('levelTitle').innerText = level.title;
+    document.getElementById('foundCount').innerText = '0';
+
+    buildGrid();
+    renderWordList();
+}
+
+// === CONSTIUTUION DE LA GRILLE ===
+function buildGrid() {
+    gridMatrix = Array(GRID_SIZE).fill(null).map(() => Array(GRID_SIZE).fill(''));
+
+    targetWords.forEach(word => {
+        let placed = false;
+        let attempts = 0;
+
+        while (!placed && attempts < 100) {
+            attempts++;
+            const dir = Math.floor(Math.random() * 3);
+            let row, col;
+
+            if (dir === 0) {
+                row = Math.floor(Math.random() * GRID_SIZE);
+                col = Math.floor(Math.random() * (GRID_SIZE - word.length + 1));
+            } else if (dir === 1) {
+                row = Math.floor(Math.random() * (GRID_SIZE - word.length + 1));
+                col = Math.floor(Math.random() * GRID_SIZE);
+            } else {
+                row = Math.floor(Math.random() * (GRID_SIZE - word.length + 1));
+                col = Math.floor(Math.random() * (GRID_SIZE - word.length + 1));
+            }
+
+            let canPlace = true;
+            for (let i = 0; i < word.length; i++) {
+                let r = row + (dir === 1 || dir === 2 ? i : 0);
+                let c = col + (dir === 0 || dir === 2 ? i : 0);
+                if (gridMatrix[r][c] !== '' && gridMatrix[r][c] !== word[i]) {
+                    canPlace = false;
+                    break;
+                }
+            }
+
+            if (canPlace) {
+                for (let i = 0; i < word.length; i++) {
+                    let r = row + (dir === 1 || dir === 2 ? i : 0);
+                    let c = col + (dir === 0 || dir === 2 ? i : 0);
+                    gridMatrix[r][c] = word[i];
+                }
+                placed = true;
+            }
+        }
+    });
+
+    const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    for (let r = 0; r < GRID_SIZE; r++) {
+        for (let c = 0; c < GRID_SIZE; c++) {
+            if (gridMatrix[r][c] === '') {
+                gridMatrix[r][c] = alphabet[Math.floor(Math.random() * alphabet.length)];
+            }
+        }
+    }
+
+    renderGrid();
+}
+
+function renderGrid() {
+    const gridEl = document.getElementById('wordGrid');
+    gridEl.innerHTML = '';
+
+    for (let r = 0; r < GRID_SIZE; r++) {
+        for (let c = 0; c < GRID_SIZE; c++) {
+            const cell = document.createElement('div');
+            cell.classList.add('cell');
+            cell.innerText = gridMatrix[r][c];
+            gridEl.appendChild(cell);
+        }
+    }
+}
+
+function renderWordList() {
+    const listEl = document.getElementById('wordList');
+    listEl.innerHTML = '';
+
+    targetWords.forEach(word => {
+        const li = document.createElement('li');
+        li.classList.add('word-item');
+        li.innerText = word;
+        li.id = `word-${word}`;
+        if (foundWords.has(word)) {
+            li.classList.add('found');
+        }
+        listEl.appendChild(li);
+    });
+}
+
+function checkSelection() {
+    const selectedString = selectedCells.map(c => c.innerText).join('');
+    const reversedString = selectedString.split('').reverse().join('');
+
+    let matchedWord = null;
+    if (targetWords.includes(selectedString) && !foundWords.has(selectedString)) {
+        matchedWord = selectedString;
+    } else if (targetWords.includes(reversedString) && !foundWords.has(reversedString)) {
+        matchedWord = reversedString;
+    }
+
+    if (matchedWord) {
+        foundWords.add(matchedWord);
+        selectedCells.forEach(c => {
+            c.classList.remove('selected');
+            c.classList.add('found');
+        });
+
+        const item = document.getElementById(`word-${matchedWord}`);
+        if (item) item.classList.add('found');
+
+        document.getElementById('foundCount').innerText = foundWords.size;
+
+        if (foundWords.size === targetWords.length) {
+            setTimeout(() => {
+                showModal();
+            }, 300);
+        }
+    } else {
+        selectedCells.forEach(c => c.classList.remove('selected'));
+    }
+
+    selectedCells = [];
+}
+
+function showModal() {
+    const modal = document.getElementById('levelModal');
+    const t = I18N[currentLang];
+    document.getElementById('modalTitle').innerText = `${t.level} ${currentLevelIndex + 1} !`;
+    modal.classList.remove('hidden');
+}

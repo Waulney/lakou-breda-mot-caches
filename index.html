@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Mots Cachés - Lakou Breda-Jeu</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="theme-light">
+
+    <div id="appContainer">
+        <!-- En-tête / Barre d'outils -->
+        <header class="top-bar">
+            <div class="brand">
+                <span class="logo-icon">🌿</span>
+                <span class="logo-text">Lakou Breda-Jeu</span>
+            </div>
+
+            <div class="controls">
+                <!-- Sélecteur de Langue -->
+                <select id="langSelect" class="select-btn">
+                    <option value="fr" selected>🇫🇷 FR</option>
+                    <option value="ht">🇭🇹 HT</option>
+                    <option value="en">🇺🇸 EN</option>
+                </select>
+
+                <!-- Bouton Mode Nuit/Jour -->
+                <button id="themeToggleBtn" class="btn-icon" title="Mode Sombre/Clair">🌙</button>
+
+                <!-- Recommencer -->
+                <button id="restartLevelBtn" class="btn-icon" title="Recommencer">🔄</button>
+            </div>
+        </header>
+
+        <!-- Titre du Niveau & Badge -->
+        <div class="level-header">
+            <span class="level-badge" id="levelDisplay">Niveau 1 / 20</span>
+            <h2 id="levelTitle">Chargement...</h2>
+            <p id="levelSubtitle" class="subtitle" data-i18n="subtitle">Trouvez tous les mots cachés dans la grille</p>
+        </div>
+
+        <!-- Zone de Jeu -->
+        <main class="game-area">
+            <div class="grid-container">
+                <div id="wordGrid" class="word-grid"></div>
+            </div>
+
+            <!-- Liste des mots -->
+            <div class="word-list-container">
+                <h3><span data-i18n="wordsToFind">Mots à trouver</span> (<span id="foundCount">0</span>/5)</h3>
+                <ul id="wordList" class="word-list"></ul>
+            </div>
+        </main>
+
+        <!-- Modale de Réussite -->
+        <div id="levelModal" class="modal hidden">
+            <div class="modal-card">
+                <div class="modal-icon">🎉</div>
+                <h2 id="modalTitle">Niveau Complété !</h2>
+                <p id="modalMessage" data-i18n="modalSuccessMsg">Félicitations ! Vous avez découvert tous les mots.</p>
+                <button id="nextLevelBtn" class="btn-primary" data-i18n="nextLevel">Niveau Suivant ➔</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

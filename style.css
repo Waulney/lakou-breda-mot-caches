@@ -1,0 +1,305 @@
+:root {
+    --bg-main: #f0fdf4;
+    --card-bg: #ffffff;
+    --border-color: #bbf7d0;
+    --text-primary: #14532d;
+    --text-secondary: #166534;
+    --accent-green: #15803d;
+    --accent-hover: #166534;
+    --grid-bg: #dc2626; /* Non utilisé, contrôlé par grid */
+    --cell-bg: #e2e8f0;
+    --cell-text: #0f172a;
+    --cell-selected: #22c55e;
+    --cell-found: #15803d;
+    --shadow-color: rgba(22, 101, 52, 0.15);
+}
+
+/* THÈME SOMBRE / MODE NUIT */
+body.theme-dark {
+    --bg-main: #052e16;
+    --card-bg: #0f3d21;
+    --border-color: #166534;
+    --text-primary: #f0fdf4;
+    --text-secondary: #86efac;
+    --accent-green: #22c55e;
+    --accent-hover: #4ade80;
+    --cell-bg: #14532d;
+    --cell-text: #f0fdf4;
+    --cell-selected: #16a34a;
+    --cell-found: #22c55e;
+    --shadow-color: rgba(0, 0, 0, 0.5);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#appContainer {
+    width: 100%;
+    max-width: 480px;
+    background: var(--card-bg);
+    border-radius: 24px;
+    padding: 20px;
+    box-shadow: 0 10px 30px var(--shadow-color);
+    border: 2px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transition: background 0.3s, border-color 0.3s;
+}
+
+/* En-tête & Contrôles */
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: var(--accent-green);
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.select-btn {
+    background: var(--bg-main);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    padding: 6px 10px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    outline: none;
+}
+
+.btn-icon {
+    background: var(--bg-main);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 6px 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: transform 0.2s;
+}
+
+.btn-icon:active {
+    transform: scale(0.9);
+}
+
+/* Titre Niveau */
+.level-header {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.level-badge {
+    background: var(--accent-green);
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 800;
+    padding: 4px 14px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.level-header h2 {
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    font-weight: 800;
+}
+
+.subtitle {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+/* Zone du Jeu & Grille */
+.game-area {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.grid-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.word-grid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 5px;
+    background: var(--bg-main);
+    padding: 10px;
+    border-radius: 16px;
+    border: 2px solid var(--border-color);
+    touch-action: none;
+}
+
+.cell {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 800;
+    font-size: 0.95rem;
+    background: var(--card-bg);
+    color: var(--text-primary);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+
+.cell.selected {
+    background: #f59e0b !important;
+    color: #ffffff !important;
+}
+
+.cell.found {
+    background: var(--accent-green) !important;
+    color: #ffffff !important;
+    border-color: var(--accent-green) !important;
+}
+
+/* Liste des Mots */
+.word-list-container {
+    background: var(--bg-main);
+    padding: 14px;
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+}
+
+.word-list-container h3 {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.word-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    list-style: none;
+}
+
+.word-item {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    padding: 6px 12px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.word-item.found {
+    background: var(--accent-green);
+    color: #ffffff;
+    text-decoration: line-through;
+    opacity: 0.85;
+}
+
+/* Modale */
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    z-index: 100;
+}
+
+.modal-card {
+    background: var(--card-bg);
+    border: 2px solid var(--border-color);
+    border-radius: 24px;
+    padding: 24px;
+    text-align: center;
+    max-width: 360px;
+    width: 100%;
+}
+
+.modal-icon {
+    font-size: 3rem;
+    margin-bottom: 8px;
+}
+
+.modal-card h2 {
+    font-size: 1.3rem;
+    color: var(--accent-green);
+    margin-bottom: 8px;
+}
+
+.modal-card p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+}
+
+.btn-primary {
+    background: var(--accent-green);
+    color: #ffffff;
+    border: none;
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: 800;
+    border-radius: 12px;
+    cursor: pointer;
+    width: 100%;
+    transition: background 0.2s;
+}
+
+.btn-primary:hover {
+    background: var(--accent-hover);
+}
+
+.hidden {
+    display: none !important;
+}
+
+@media (max-width: 380px) {
+    .cell {
+        width: 28px;
+        height: 28px;
+        font-size: 0.85rem;
+    }
+}
