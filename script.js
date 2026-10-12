@@ -1,4 +1,3 @@
-// === TRADUCTIONS ET DICTIONNAIRE MULTILINGUE ===
 const I18N = {
     fr: {
         subtitle: "Trouvez tous les mots cachés dans la grille",
@@ -6,15 +5,7 @@ const I18N = {
         level: "Niveau",
         modalSuccessMsg: "Félicitations ! Vous avez découvert tous les mots.",
         nextLevel: "Niveau Suivant ➔",
-        completedAll: "Félicitations ! Vous avez terminé les 20 niveaux !"
-    },
-    ht: {
-        subtitle: "Jwenn tout mo ki kache nan griy la",
-        wordsToFind: "Mo pou w jwenn",
-        level: "Nivo",
-        modalSuccessMsg: "Felisitasyon ! Ou jwenn tout mo yo.",
-        nextLevel: "Nivo Swivan ➔",
-        completedAll: "Bravou ! Ou fini tout 20 nivo yo !"
+        completedAll: "Félicitations ! Vous avez terminé tous les 20 niveaux de Lakou Breda !"
     },
     en: {
         subtitle: "Find all the hidden words in the grid",
@@ -22,18 +13,17 @@ const I18N = {
         level: "Level",
         modalSuccessMsg: "Congratulations! You found all the words.",
         nextLevel: "Next Level ➔",
-        completedAll: "Congratulations! You completed all 20 levels!"
+        completedAll: "Congratulations! You completed all 20 levels of Lakou Breda!"
     }
 };
 
-// === 20 NIVEAUX DANS LES 3 LANGUES ===
 const LEVELS = {
     fr: [
         { title: "1. Histoire & Héritage", words: ["BREDA", "TOUSSAINT", "LOUVERTURE", "HISTOIRE", "MEMOIRE"] },
         { title: "2. Métropole du Nord", words: ["CAP", "HAITI", "NORD", "PATRIMOINE", "HERITAGE"] },
         { title: "3. Service d'Hébergement", words: ["HOTEL", "BUNGALOW", "GITE", "CHAMBRE", "LOGEMENT"] },
         { title: "4. Architecture Ancestrale", words: ["STYLE", "BOIS", "VERANDA", "TRADITION", "CHARME"] },
-        { title: "5. Confort & Equipements", words: ["CONFORT", "PROPRE", "SECURITE", "EAUCHAUDE", "SEJOUR"] },
+        { title: "5. Confort & Équipements", words: ["CONFORT", "PROPRE", "SECURITE", "EAUCHAUDE", "SEJOUR"] },
         { title: "6. Cuisine Pratique", words: ["CUISINETTE", "EQUIPE", "AUTONOMIE", "EQUIPEMENT", "REPOS"] },
         { title: "7. Technologie & Connexion", words: ["WIFI", "INTERNET", "TELEVISION", "ECRAN", "RESEAU"] },
         { title: "8. Centre de Conférences", words: ["CONFERENCE", "REUNION", "SEMINAIRE", "SALLE", "AFFAIRES"] },
@@ -41,7 +31,7 @@ const LEVELS = {
         { title: "10. Réceptions & Fêtes", words: ["BANQUET", "MARIAGE", "FETE", "ANNIVERSAIRE", "ACCUEIL"] },
         { title: "11. Gastronomie Haïtienne", words: ["GASTRONOMIE", "RESTAURANT", "MENU", "CUISINE", "SAVEUR"] },
         { title: "12. La Ferme Agricole", words: ["FERME", "RECOLTE", "FRAIS", "PRODUIT", "NATURE"] },
-        { title: "13. Boissons & Jus", words: ["JUS", "BOISSON", "DICE", "DELECTABLE", "COCKTAIL"] },
+        { title: "13. Boissons & Jus", words: ["JUS", "BOISSON", "GLACE", "DELECTABLE", "COCKTAIL"] },
         { title: "14. Cadre & Verdure", words: ["CHALEUREUX", "CADRE", "VERDURE", "PLEINAIR", "DETENTE"] },
         { title: "15. Espace Lakou Fun", words: ["LAKOU", "LUDIQUE", "PARC", "LOISIR", "AMUSEMENT"] },
         { title: "16. Jeux Traditionnels", words: ["DOMINO", "MARELLE", "DAMIER", "LUDO", "JEUX"] },
@@ -49,28 +39,6 @@ const LEVELS = {
         { title: "18. Expérience Familiale", words: ["FAMILLE", "ENFANTS", "AMIS", "PARTAGE", "JOIE"] },
         { title: "19. Équipe & Service", words: ["SERVICE", "EQUIPE", "ACCUEIL", "QUALITE", "SURMESURE"] },
         { title: "20. Vision AyitiZ", words: ["AYITIZ", "VALEUR", "REUSSITE", "VISION", "EXCELLENCE"] }
-    ],
-    ht: [
-        { title: "1. Istwa ak Eraj", words: ["BREDA", "TUSEN", "LOUVELETI", "ISTWA", "MEMWA"] },
-        { title: "2. Metropol Nò", words: ["KAP", "AYITI", "NO", "PATRIMOAN", "ERITAJ"] },
-        { title: "3. Sèvis Ebejman", words: ["OTEL", "BOUNGALO", "JIT", "CHANM", "LOJMAN"] },
-        { title: "4. Arkitektè Ansyen", words: ["ESTIL", "BWA", "VERANDA", "TRADISYON", "CHAM"] },
-        { title: "5. Konfò ak Sekirite", words: ["KONFO", "PWOPE", "SEKIRITE", "DLOCHO", "SEJOU"] },
-        { title: "6. Kizin ak Ekipman", words: ["KIZIN", "EKIPE", "OTONOMI", "PAWOL", "REPO"] },
-        { title: "7. Teknolozi ak Entènèt", words: ["WIFI", "ENTENET", "TELEVIZYON", "EKRAN", "REZO"] },
-        { title: "8. Sant Konferans", words: ["KONFERANS", "RENYON", "SEMENE", "SAL", "AFE"] },
-        { title: "9. Ekipman Konferans", words: ["PWOJEKTE", "MIKRO", "SONO", "TABLEAU", "KLI"] },
-        { title: "10. Resepsyon ak Fèt", words: ["BANKE", "MARYAJ", "FET", "ANIVESE", "AKEI"] },
-        { title: "11. Gastronomi Ayisyen", words: ["MOULE", "RESTORAN", "MENI", "KIZIN", "GOU"] },
-        { title: "12. Jaden ak Agrikilti", words: ["JADEN", "REKOLT", "FRE", "PWODWI", "NATI"] },
-        { title: "13. Bwoson ak Ji", words: ["JI", "BWASON", "GLAS", "GOUDOU", "KOKTEL"] },
-        { title: "14. Kad ak Lanati", words: ["KALE", "KAD", "VET", "ALE", "DETANN"] },
-        { title: "15. Espas Lakou Fun", words: ["LAKOU", "LUDIK", "PAK", "LOZIK", "ANMIZMAN"] },
-        { title: "16. Jwèt Tradisyonèl", words: ["DOMINO", "MAREL", "DAMYE", "LUDO", "JWET"] },
-        { title: "17. Espò ak Sible", words: ["PINGPONG", "FLES", "BIYA", "BOLING", "MATCH"] },
-        { title: "18. Fanmi ak Zanmi", words: ["FANMI", "TIMOUN", "ZANMI", "PATAGE", "JWA"] },
-        { title: "19. Ekip ak Sèvis", words: ["SEVIS", "EKIP", "AKEI", "KALITE", "MESI"] },
-        { title: "20. Vizyon AyitiZ", words: ["AYITIZ", "VALE", "SISI", "VIZYON", "GWOSTOU"] }
     ],
     en: [
         { title: "1. History & Heritage", words: ["BREDA", "TOUSSAINT", "LOUVERTURE", "HISTORY", "MEMORY"] },
@@ -96,7 +64,6 @@ const LEVELS = {
     ]
 };
 
-// === ÉTAT DU JEU ===
 const GRID_SIZE = 10;
 let currentLang = 'fr';
 let currentLevelIndex = 0;
@@ -106,18 +73,17 @@ let foundWords = new Set();
 let selectedCells = [];
 let isSelecting = false;
 
-// === INITIALISATION ===
 document.addEventListener('DOMContentLoaded', () => {
     loadLevel(currentLevelIndex);
 
-    // Changement de Langue
+    // Handle Language Switch (FR / EN)
     document.getElementById('langSelect').addEventListener('change', (e) => {
         currentLang = e.target.value;
         updateUITranslations();
         loadLevel(currentLevelIndex);
     });
 
-    // Toggle Thème Sombre / Clair
+    // Toggle Dark / Light Theme
     document.getElementById('themeToggleBtn').addEventListener('click', () => {
         const body = document.body;
         if (body.classList.contains('theme-dark')) {
@@ -129,12 +95,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Restart Level
+    // Restart Current Level
     document.getElementById('restartLevelBtn').addEventListener('click', () => {
         loadLevel(currentLevelIndex);
     });
 
-    // Next Level
+    // Next Level Button Action
     document.getElementById('nextLevelBtn').addEventListener('click', () => {
         document.getElementById('levelModal').classList.add('hidden');
         currentLevelIndex++;
@@ -147,9 +113,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Sélection Tactile / Souris
     const gridEl = document.getElementById('wordGrid');
-    
+
     gridEl.addEventListener('pointerdown', (e) => {
         if (e.target.classList.contains('cell')) {
             isSelecting = true;
@@ -175,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// === MISE À JOUR DES TRADUCTIONS UI ===
+// Translate UI Labels dynamically
 function updateUITranslations() {
     const t = I18N[currentLang];
     document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -184,7 +149,6 @@ function updateUITranslations() {
     });
 }
 
-// === CHARGEMENT DE NIVEAU ===
 function loadLevel(index) {
     const level = LEVELS[currentLang][index];
     targetWords = level.words.map(w => w.toUpperCase());
@@ -199,7 +163,6 @@ function loadLevel(index) {
     renderWordList();
 }
 
-// === CONSTIUTUION DE LA GRILLE ===
 function buildGrid() {
     gridMatrix = Array(GRID_SIZE).fill(null).map(() => Array(GRID_SIZE).fill(''));
 
@@ -209,7 +172,7 @@ function buildGrid() {
 
         while (!placed && attempts < 100) {
             attempts++;
-            const dir = Math.floor(Math.random() * 3);
+            const dir = Math.floor(Math.random() * 3); // 0: Horizontal, 1: Vertical, 2: Diagonal
             let row, col;
 
             if (dir === 0) {
@@ -244,6 +207,7 @@ function buildGrid() {
         }
     });
 
+    // Fill empty cells with random uppercase letters
     const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     for (let r = 0; r < GRID_SIZE; r++) {
         for (let c = 0; c < GRID_SIZE; c++) {
