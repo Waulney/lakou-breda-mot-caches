@@ -6,15 +6,14 @@
     --text-secondary: #166534;
     --accent-green: #15803d;
     --accent-hover: #166534;
-    --grid-bg: #dc2626; /* Non utilisé, contrôlé par grid */
-    --cell-bg: #e2e8f0;
-    --cell-text: #0f172a;
-    --cell-selected: #22c55e;
+    --cell-bg: #ffffff;
+    --cell-text: #14532d;
+    --cell-selected: #f59e0b;
     --cell-found: #15803d;
     --shadow-color: rgba(22, 101, 52, 0.15);
 }
 
-/* THÈME SOMBRE / MODE NUIT */
+/* Mode Nuit / Dark Theme */
 body.theme-dark {
     --bg-main: #052e16;
     --card-bg: #0f3d21;
@@ -25,11 +24,12 @@ body.theme-dark {
     --accent-hover: #4ade80;
     --cell-bg: #14532d;
     --cell-text: #f0fdf4;
-    --cell-selected: #16a34a;
+    --cell-selected: #d97706;
     --cell-found: #22c55e;
     --shadow-color: rgba(0, 0, 0, 0.5);
 }
 
+/* Reset & Global Styling */
 * {
     margin: 0;
     padding: 0;
@@ -64,7 +64,6 @@ body {
     transition: background 0.3s, border-color 0.3s;
 }
 
-/* En-tête & Contrôles */
 .top-bar {
     display: flex;
     justify-content: space-between;
@@ -106,14 +105,14 @@ body {
     border-radius: 50%;
     cursor: pointer;
     font-size: 0.95rem;
-    transition: transform 0.2s;
+    transition: transform 0.2s, background 0.2s;
 }
 
 .btn-icon:active {
     transform: scale(0.9);
 }
 
-/* Titre Niveau */
+/* Level Display Header */
 .level-header {
     text-align: center;
     display: flex;
@@ -144,7 +143,6 @@ body {
     color: var(--text-secondary);
 }
 
-/* Zone du Jeu & Grille */
 .game-area {
     display: flex;
     flex-direction: column;
@@ -169,33 +167,34 @@ body {
 }
 
 .cell {
-    width: 32px;
-    height: 32px;
+    width: 34px;
+    height: 34px;
     display: flex;
     justify-content: center;
     align-items: center;
     font-weight: 800;
     font-size: 0.95rem;
-    background: var(--card-bg);
-    color: var(--text-primary);
+    background: var(--cell-bg);
+    color: var(--cell-text);
     border-radius: 8px;
     border: 1px solid var(--border-color);
     cursor: pointer;
-    transition: background 0.15s, color 0.15s;
+    transition: background 0.15s, color 0.15s, transform 0.1s;
 }
 
 .cell.selected {
-    background: #f59e0b !important;
+    background: var(--cell-selected) !important;
     color: #ffffff !important;
+    border-color: var(--cell-selected) !important;
+    transform: scale(1.05);
 }
 
 .cell.found {
-    background: var(--accent-green) !important;
+    background: var(--cell-found) !important;
     color: #ffffff !important;
-    border-color: var(--accent-green) !important;
+    border-color: var(--cell-found) !important;
 }
 
-/* Liste des Mots */
 .word-list-container {
     background: var(--bg-main);
     padding: 14px;
@@ -226,6 +225,7 @@ body {
     font-size: 0.85rem;
     font-weight: 700;
     color: var(--text-primary);
+    transition: all 0.2s;
 }
 
 .word-item.found {
@@ -235,7 +235,7 @@ body {
     opacity: 0.85;
 }
 
-/* Modale */
+/* Modal styling */
 .modal {
     position: fixed;
     inset: 0;
@@ -296,7 +296,7 @@ body {
     display: none !important;
 }
 
-@media (max-width: 380px) {
+@media (max-width: 400px) {
     .cell {
         width: 28px;
         height: 28px;
