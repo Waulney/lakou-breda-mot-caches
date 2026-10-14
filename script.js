@@ -70,20 +70,21 @@ let currentLevelIndex = 0;
 let gridMatrix = [];
 let targetWords = [];
 let foundWords = new Set();
-let selectedCells = [];
+
+// Gestion propre de la sélection linéaire
+let startCell = null;
+let currentCells = [];
 let isSelecting = false;
 
 document.addEventListener('DOMContentLoaded', () => {
     loadLevel(currentLevelIndex);
 
-    // Handle Language Switch (FR / EN)
     document.getElementById('langSelect').addEventListener('change', (e) => {
         currentLang = e.target.value;
         updateUITranslations();
         loadLevel(currentLevelIndex);
     });
 
-    // Toggle Dark / Light Theme
     document.getElementById('themeToggleBtn').addEventListener('click', () => {
         const body = document.body;
         if (body.classList.contains('theme-dark')) {
@@ -95,12 +96,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Restart Current Level
     document.getElementById('restartLevelBtn').addEventListener('click', () => {
         loadLevel(currentLevelIndex);
     });
 
-    // Next Level Button Action
     document.getElementById('nextLevelBtn').addEventListener('click', () => {
         document.getElementById('levelModal').classList.add('hidden');
         currentLevelIndex++;
@@ -115,32 +114,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const gridEl = document.getElementById('wordGrid');
 
+    // Début de sélection
     gridEl.addEventListener('pointerdown', (e) => {
-        if (e.target.classList.contains('cell')) {
+        const cell = e.target.closest('.cell');
+        if (cell) {
             isSelecting = true;
-            selectedCells = [e.target];
-            e.target.classList.add('selected');
+            startCell = cell;
+            updateSelection(cell);
         }
     });
 
+    // Glissement du curseur ou du doigt
     gridEl.addEventListener('pointermove', (e) => {
         if (!isSelecting) return;
-        const el = document.elementFromPoint(e.clientX, e.clientY);
-        if (el && el.classList.contains('cell') && !selectedCells.includes(el)) {
-            selectedCells.push(el);
-            el.classList.add('selected');
+        const target = document.elementFromPoint(e.clientX, e.clientY);
+        const cell = target ? target.closest('.cell') : null;
+        if (cell && gridEl.contains(cell)) {
+            updateSelection(cell);
         }
     });
 
+    // Fin de sélection
     window.addEventListener('pointerup', () => {
         if (isSelecting) {
             isSelecting = false;
             checkSelection();
+            clearTemporarySelection();
         }
     });
 });
 
-// Translate UI Labels dynamically
 function updateUITranslations() {
     const t = I18N[currentLang];
     document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -172,7 +175,7 @@ function buildGrid() {
 
         while (!placed && attempts < 100) {
             attempts++;
-            const dir = Math.floor(Math.random() * 3); // 0: Horizontal, 1: Vertical, 2: Diagonal
+            const dir = Math.floor(Math.random() * 3);
             let row, col;
 
             if (dir === 0) {
@@ -207,7 +210,6 @@ function buildGrid() {
         }
     });
 
-    // Fill empty cells with random uppercase letters
     const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     for (let r = 0; r < GRID_SIZE; r++) {
         for (let c = 0; c < GRID_SIZE; c++) {
@@ -229,6 +231,8 @@ function renderGrid() {
             const cell = document.createElement('div');
             cell.classList.add('cell');
             cell.innerText = gridMatrix[r][c];
+            cell.dataset.row = r;
+            cell.dataset.col = c;
             gridEl.appendChild(cell);
         }
     }
@@ -250,8 +254,50 @@ function renderWordList() {
     });
 }
 
+// Calcule strictement les cellules en ligne droite (Horizontale, Verticale ou Diagonale)
+function updateSelection(endCell) {
+    // Nettoyer la sélection précédente
+    document.querySelectorAll('.cell.selected').forEach(c => c.classList.remove('selected'));
+    currentCells = [];
+
+    const r1 = parseInt(startCell.dataset.row);
+    const c1 = parseInt(startCell.dataset.col);
+    const r2 = parseInt(endCell.dataset.row);
+    const c2 = parseInt(endCell.dataset.col);
+
+    const dr = Math.sign(r2 - r1);
+    const dc = Math.sign(c2 - c1);
+
+    const len = Math.max(Math.abs(r2 - r1), Math.abs(c2 - c1));
+
+    // Vérifier si la ligne est valide (horizontale, verticale ou diagonale exacte)
+    if (r1 === r2 || c1 === c2 || Math.abs(r2 - r1) === Math.abs(c2 - c1)) {
+        for (let i = 0; i <= len; i++) {
+            const r = r1 + i * dr;
+            const c = c1 + i * dc;
+            const cell = document.querySelector(`.cell[data-row='${r}'][data-col='${c} ‘]`) || document.querySelector(`.cell[data-row='${r}'][data-col='${c}']`);
+            if (cell) {
+                cell.classList.add('selected');
+                currentCells.push(cell);
+            }
+        }
+    } else {
+        // Si ce n'est pas une ligne droite parfaite, on sélectionne uniquement la cellule de départ
+        startCell.classList.add('selected');
+        currentCells = [startCell];
+    }
+}
+
+function clearTemporarySelection() {
+    document.querySelectorAll('.cell.selected').forEach(c => c.classList.remove('selected'));
+    currentCells = [];
+    startCell = null;
+}
+
 function checkSelection() {
-    const selectedString = selectedCells.map(c => c.innerText).join('');
+    if (currentCells.length === 0) return;
+
+    const selectedString = currentCells.map(c => c.innerText).join('');
     const reversedString = selectedString.split('').reverse().join('');
 
     let matchedWord = null;
@@ -263,8 +309,7 @@ function checkSelection() {
 
     if (matchedWord) {
         foundWords.add(matchedWord);
-        selectedCells.forEach(c => {
-            c.classList.remove('selected');
+        currentCells.forEach(c => {
             c.classList.add('found');
         });
 
@@ -278,11 +323,7 @@ function checkSelection() {
                 showModal();
             }, 300);
         }
-    } else {
-        selectedCells.forEach(c => c.classList.remove('selected'));
     }
-
-    selectedCells = [];
 }
 
 function showModal() {
